@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require 'config/db.php';
 require_login();
 
 $uid = $_SESSION['user_id'];

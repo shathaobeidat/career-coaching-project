@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require 'config/db.php';
 if (!empty($_SESSION['user_id'])) { header('Location: dashboard.php'); exit; }
 
 $error = '';
