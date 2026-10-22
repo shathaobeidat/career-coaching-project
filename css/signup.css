@@ -1,0 +1,76 @@
+/* ==========================================================
+   Signup page – extras on top of auth.css
+   ========================================================== */
+
+.name-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* "What brings you here?" choices */
+.goals {
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.goals legend {
+  padding: 0;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.goals__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.goal { position: relative; }
+
+.goal input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.goal span {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 8px 14px;
+  background: var(--field);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-field);
+  font-size: 0.95rem;
+  line-height: 1.25;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.goal:hover span { border-color: #9db0aa; }
+
+.goal input:checked + span {
+  background: #e3efec;
+  border-color: var(--forest);
+  font-weight: 600;
+}
+
+.goal input:focus-visible + span {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.terms { margin: 4px 0 22px; }
+
+@media (max-width: 480px) {
+  .name-row,
+  .goals__grid { grid-template-columns: 1fr; }
+  .name-row { gap: 0; }
+}
