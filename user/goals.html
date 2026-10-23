@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My goals | CareerPath</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <nav class="sidebar" aria-label="Main">
+      <a class="brand" href="dashboard.html"><span class="brand-mark"></span>CareerPath</a>
+      <a class="nav-link" href="dashboard.html">Dashboard</a>
+      <a class="nav-link active" href="goals.html">My goals</a>
+      <a class="nav-link" href="sessions.html">Sessions</a>
+      <a class="nav-link" href="find-coach.html">Find a coach</a>
+      <a class="nav-link" href="profile.html">Profile</a>
+      <a class="nav-link logout" href="login.html">Log out</a>
+    </nav>
+    <main class="content">
+      <header class="page-head">
+        <div><h1>My goals</h1><p class="muted">Track what you are working toward.</p></div>
+        
+      </header>
+      <div class="grid">
+        <section class="panel">
+          <h2>Active goals</h2>
+          <div class="goal"><div class="goal-top"><span>Become a product manager</span><span>70%</span></div><div class="bar"><span style="width:70%"></span></div></div>
+          <div class="goal"><div class="goal-top"><span>Update CV and LinkedIn profile</span><span>90%</span></div><div class="bar"><span style="width:90%"></span></div></div>
+          <div class="goal"><div class="goal-top"><span>Practice 10 mock interviews</span><span>15%</span></div><div class="bar"><span style="width:15%"></span></div></div>
+        </section>
+        <section class="panel form-panel">
+          <h2>Add a goal</h2>
+          <form action="goals.html">
+            <label for="gt">Goal</label><input id="gt" type="text" placeholder="e.g. Land a senior role" required>
+            <label for="gd">Target date</label><input id="gd" type="date">
+            <label for="gn">Notes</label><textarea id="gn"></textarea>
+            <button class="btn" type="submit">Save goal</button>
+          </form>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

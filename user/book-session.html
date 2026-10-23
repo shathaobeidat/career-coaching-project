@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a session | CareerPath</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <nav class="sidebar" aria-label="Main">
+      <a class="brand" href="dashboard.html"><span class="brand-mark"></span>CareerPath</a>
+      <a class="nav-link" href="dashboard.html">Dashboard</a>
+      <a class="nav-link" href="goals.html">My goals</a>
+      <a class="nav-link" href="sessions.html">Sessions</a>
+      <a class="nav-link active" href="find-coach.html">Find a coach</a>
+      <a class="nav-link" href="profile.html">Profile</a>
+      <a class="nav-link logout" href="login.html">Log out</a>
+    </nav>
+    <main class="content">
+      <header class="page-head">
+        <div><h1>Book a session</h1><p class="muted">Pick a topic and a time that suits you.</p></div>
+        
+      </header>
+      <section class="panel form-panel">
+        <div class="profile-head"><div class="avatar">OH</div><div><h2>Omar Haddad</h2><p class="muted">$60 per 45-minute session</p></div></div>
+        <form action="sessions.html">
+          <label for="topic">Topic</label>
+          <select id="topic"><option>Interview practice</option><option>Promotion planning</option><option>CV review</option></select>
+          <label for="day">Date</label><input id="day" type="date" required>
+          <label>Time</label>
+          <div class="slots">
+            <label><input type="radio" name="slot" checked><span>10:00 AM</span></label>
+            <label><input type="radio" name="slot"><span>1:00 PM</span></label>
+            <label><input type="radio" name="slot"><span>4:00 PM</span></label>
+          </div>
+          <label for="note">What do you want to work on?</label><textarea id="note"></textarea>
+          <button class="btn" type="submit">Confirm booking</button>
+        </form>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
