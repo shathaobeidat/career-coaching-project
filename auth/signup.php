@@ -9,31 +9,45 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['subtn'])) {
     $email    = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     $rpass    = $_POST['rpassword'] ?? '';
-    $role     = $_POST['role'] ?? 'mentee'; 
+    $role     = $_POST['role'] ?? 'mentee';
+
+    if (!in_array($role, ['mentor', 'mentee'], true)) {
+        $role = 'mentee';
+    }
 
     if (empty($name) || empty($email) || empty($password)) {
         $error = 'All fields are required';
-    } 
+    }
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Invalid email address';
-    } 
+    }
+    elseif (strlen($password) < 8) {
+        $error = 'Password must be at least 8 characters';
+    }
     elseif ($password !== $rpass) {
         $error = 'Mismatch passwords';
-    } 
+    }
     else {
-  
         $reg = new DB_con();
-        $result = $reg->register($name, $email, $password, $role);
+        try {
+            $result = $reg->register($name, $email, $password, $role);
+        } catch (PDOException $e) {
+            $result = false;   
+        }
 
         if ($result) {
-       
-            if ($role === 'mentor') {
-                header("Location: ../coach/coach-dashboard.php");
-                exit();
-            } else {
-                header("Location: ../user/dashboard.php");
-                exit();
+        
+            $user = $reg->login($email, $password);
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
             }
+            session_regenerate_id(true);
+            $_SESSION['user_id']   = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_role'] = $user['role'];
+
+            header("Location: " . ($role === 'mentor' ? "../coach/coach-profile.php" : "../user/dashboard.php"));
+            exit();
         } else {
             $error = 'Registration failed. Email might already be in use.';
         }
@@ -54,12 +68,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['subtn'])) {
 <body class="auth-body">
   <main class="auth">
     <aside class="auth-side">
-      <a class="brand" href="index.html"><span class="brand-mark"></span>CareerPath</a>
+      <a class="brand" href="../index.html"><span class="brand-mark"></span>CareerPath</a>
       <h1>Your next role starts with a plan.</h1>
       <p>Set a goal, meet a coach, and track every step toward the job you want.</p>
       <svg class="trail" viewBox="0 0 320 120" aria-hidden="true"><path d="M6 100 C 70 100, 70 30, 140 40 S 230 90, 314 14" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/><circle cx="6" cy="100" r="6" fill="currentColor"/><circle cx="140" cy="40" r="6" fill="currentColor"/><circle cx="314" cy="14" r="9" fill="#F2A93B"/></svg>
     </aside>
-    
+
     <section class="auth-panel">
       <h2>Create your account</h2>
 
@@ -68,9 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['subtn'])) {
       <?php endif; ?>
 
       <p class="muted">Already registered? <a href="login.php">Log in</a></p>
-      
+
       <form action="signup.php" method="POST">
-        
+
         <fieldset class="role-group" style="border:none; padding:0; margin-bottom:20px;">
           <legend class="role-legend">I am joining as a...</legend>
           <div class="role-options" style="display:flex; gap:15px; margin-top:10px;">
@@ -96,10 +110,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['subtn'])) {
 
         <label for="full_name">Full name</label>
         <input id="full_name" type="text" autocomplete="name" required name="fname">
-        
+
         <label for="email">Email</label>
         <input id="email" type="email" autocomplete="email" placeholder="shatha@email.com" required name="email">
-       
+
         <div class="row">
           <div>
             <label for="password">Password</label>
@@ -110,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['subtn'])) {
             <input id="confirm_password" type="password" autocomplete="new-password" required name="rpassword">
           </div>
         </div>
-        
+
         <button class="btn" type="submit" name="subtn">Create account</button>
       </form>
     </section>

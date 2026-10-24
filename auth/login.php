@@ -4,7 +4,6 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['login_btn'])) {
     $email    = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
-
     if (empty($email) || empty($password)) {
         $error = 'All fields are required';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -12,11 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['login_btn'])) {
     } else {
         $db = new DB_con();
         $user = $db->login($email, $password);
-
         if ($user) {
-            if (session_status() === PHP_SESSION_NONE) {
                 session_start();
-            }
             $_SESSION['user_id']   = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['user_role'] = $user['role'];
@@ -24,11 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['login_btn'])) {
             if ($user['role'] === 'mentor') {
                 header("Location: ../coach/coach-dashboard.php");
                 exit();
-            } elseif ($user['role'] === 'customer') {
+            } elseif ($user['role'] === 'mentee') {
                 header("Location: ../user/dashboard.php");
                 exit();
             } else {
-                header("Location: ../admin/dashboard.php"); 
+                header("Location: ../admin/dashboard.php");
                 exit();
             }
         } else {
@@ -51,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['login_btn'])) {
 <body class="auth-body">
   <main class="auth">
     <aside class="auth-side">
-      <a class="brand" href="index.html"><span class="brand-mark"></span>CareerPath</a>
+      <a class="brand" href="../index.html"><span class="brand-mark"></span>CareerPath</a>
       <h1>Welcome back!</h1>
       <p>Continue tracking your goals and connecting with your mentors.</p>
     </aside>
